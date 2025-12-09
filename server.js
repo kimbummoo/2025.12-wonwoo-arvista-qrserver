@@ -1,35 +1,3 @@
-// 이미지 다운로드 페이지: 이미지와 다운로드 버튼 제공
-app.get('/images/:uuid/page', (req, res) => {
-    const { uuid } = req.params;
-    const entry = fileMap.get(uuid);
-    if (!entry || !fs.existsSync(entry.filePath)) {
-        return res.status(404).send('Image not found');
-    }
-    const ext = path.extname(entry.filePath).replace('.', '');
-    const imageUrl = `/images/${uuid}`;
-    const downloadUrl = `/images/${uuid}/download`;
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="UTF-8">
-            <title>이미지 다운로드</title>
-            <style>
-                body { text-align: center; font-family: sans-serif; margin-top: 40px; }
-                img { max-width: 80vw; max-height: 60vh; border: 1px solid #ccc; background: #eee; }
-                .btn { display: inline-block; margin-top: 20px; padding: 10px 24px; font-size: 1.1em; background: #0078d4; color: #fff; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; }
-                .btn:hover { background: #005fa3; }
-            </style>
-        </head>
-        <body>
-            <h2>이미지 미리보기 및 다운로드</h2>
-            <img src="${imageUrl}" alt="이미지" />
-            <br />
-            <a href="${downloadUrl}" class="btn" download>다운로드</a>
-        </body>
-        </html>
-    `);
-});
 const express = require('express');
 const multer = require('multer');
 const { v4: uuidv4 } = require('uuid'); 
@@ -99,7 +67,40 @@ app.post('/upload', upload.single('image'), (req, res) => {
     fileMap.set(id, { filePath, timer });
 
     // 클라이언트가 파싱 즉시 사용할 수 있는 상대 URL 반환
-    res.json({ url: `/images/${id}` });
+    res.json({ url: `/images/${id}/page` });
+});
+
+// 이미지 다운로드 페이지: 이미지와 다운로드 버튼 제공
+app.get('/images/:uuid/page', (req, res) => {
+    const { uuid } = req.params;
+    const entry = fileMap.get(uuid);
+    if (!entry || !fs.existsSync(entry.filePath)) {
+        return res.status(404).send('Image not found');
+    }
+    const ext = path.extname(entry.filePath).replace('.', '');
+    const imageUrl = `/images/${uuid}`;
+    const downloadUrl = `/images/${uuid}/download`;
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <title>이미지 다운로드</title>
+            <style>
+                body { text-align: center; font-family: sans-serif; margin-top: 40px; }
+                img { max-width: 80vw; max-height: 60vh; border: 1px solid #ccc; background: #eee; }
+                .btn { display: inline-block; margin-top: 20px; padding: 10px 24px; font-size: 1.1em; background: #0078d4; color: #fff; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; }
+                .btn:hover { background: #005fa3; }
+            </style>
+        </head>
+        <body>
+            <h2>이미지 미리보기 및 다운로드</h2>
+            <img src="${imageUrl}" alt="이미지" />
+            <br />
+            <a href="${downloadUrl}" class="btn" download>다운로드</a>
+        </body>
+        </html>
+    `);
 });
 
 // 이미지 다운로드/표시 (GET) - 원본 파일 그대로 전송
