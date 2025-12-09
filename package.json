@@ -1,0 +1,16 @@
+{
+  "name": "imageserver",
+  "version": "1.0.0",
+  "description": "A simple Node.js server that responds with 'Hello, world!'",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "multer": "^2.0.2",
+    "uuid": "^13.0.0"
+  }
+}
