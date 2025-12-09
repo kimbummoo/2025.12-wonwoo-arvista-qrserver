@@ -129,7 +129,7 @@ app.get('/images/:uuid/page', (req, res) => {
                 </style>
             </head>
             <body>
-                <h2>ARVISTA</h2>
+                <h2>ARVISTA 이미지 다운로드</h2>
                 <div class="preview-container">
                     <img src="${imageUrl}" alt="이미지" />
                     <a href="${downloadUrl}" class="btn" download>다운로드</a>
