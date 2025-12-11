@@ -116,12 +116,12 @@ app.get('/images/:uuid/page', (req, res) => {
                     .btn {
                         display: inline-block;
                         margin-top: 0;
-                        padding: 10px 24px;
-                        font-size: 1.1em;
+                        padding: 20px 48px;
+                        font-size: 2.2em;
                         background: #0078d4;
                         color: #fff;
                         border: none;
-                        border-radius: 6px;
+                        border-radius: 12px;
                         cursor: pointer;
                         text-decoration: none;
                     }
@@ -129,10 +129,9 @@ app.get('/images/:uuid/page', (req, res) => {
                 </style>
             </head>
             <body>
-                <h2>ARVISTA 이미지 다운로드</h2>
                 <div class="preview-container">
                     <img src="${imageUrl}" alt="이미지" />
-                    <a href="${downloadUrl}" class="btn" download>다운로드</a>
+                    <a href="${downloadUrl}" class="btn" download>Download</a>
                 </div>
             </body>
             </html>
